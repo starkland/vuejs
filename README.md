@@ -1,18 +1,21 @@
-# myapp
+## How to use
 
-> Open source example of Vuejs with the Github API.
+Install dependencies:
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
+```bash
+$ npm install
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Start the application:
+
+```bash
+$ npm run dev
+```
+
+Build the application:
+
+```bash
+$ npm run build
+```
+
+[MIT License](https://thulioph.mit-license.org) © Thulio Philipe
