@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <form @submit.prevent="submitForm">
       <div class="field">
         <label class="label">Search by:</label>
@@ -67,8 +67,7 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    min-height: 350px;
-    height: auto;
+  form {
+    margin-bottom: 20px;
   }
 </style>

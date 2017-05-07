@@ -9,7 +9,9 @@
 
     <br>
 
-    <st-form></st-form>
+    <div class="container">
+      <st-form></st-form>
+    </div>
 
     <st-footer></st-footer>
   </div>
@@ -44,4 +46,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  .container {
+    min-height: 350px;
+    height: auto;
+  }
+</style>
