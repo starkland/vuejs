@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
   .container {
-    min-height: 330px;
+    min-height: 350px;
     height: auto;
   }
 </style>
