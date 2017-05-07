@@ -40,8 +40,6 @@
       <span></span>
     </span>
 
-    <!-- This "nav-menu" is hidden on mobile -->
-    <!-- Add the modifier "is-active" to display it on mobile -->
     <div
       class="nav-right nav-menu"
       :class="{ 'is-active': isOpen }">
