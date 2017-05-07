@@ -10,6 +10,8 @@
     <br>
 
     <st-form></st-form>
+
+    <st-footer></st-footer>
   </div>
 </template>
 
@@ -17,6 +19,7 @@
 import stHeader from './components/Header.vue';
 import stSubHeader from './components/CallToAction.vue';
 import stForm from './components/Form.vue';
+import stFooter from './components/Footer.vue';
 
 export default {
   name: 'App',
@@ -24,7 +27,8 @@ export default {
   components: {
     stHeader,
     stSubHeader,
-    stForm
+    stForm,
+    stFooter
   },
 
   data() {
@@ -40,5 +44,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
