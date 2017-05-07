@@ -1,4 +1,6 @@
 import App from '../App.vue';
+import Users from '../Users.vue';
+
 import NotFoundComponent from '../NotFound.vue';
 
 export default [
@@ -8,9 +10,13 @@ export default [
     component: App,
     beforeEnter: (to, from, next) => {
       next();
-      // console.warn('To', to);
-      // console.warn('From', from);
     }
+  },
+
+  {
+    path: '/users/:username',
+    name: 'Users',
+    component: Users
   },
 
   {
