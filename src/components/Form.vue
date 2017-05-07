@@ -1,31 +1,41 @@
 <template>
   <div class="container">
-    <div class="field">
-      <label class="label">Search by:</label>
-      <p class="control">
-        <span class="select">
-          <select>
-            <option>Select dropdown</option>
-            <option>With options</option>
-          </select>
-        </span>
-      </p>
-    </div>
+    <form @submit.prevent="submitForm">
+      <div class="field">
+        <label class="label">Search by:</label>
+        <p class="control">
+          <span class="select">
+            <select v-model="form.selected">
+              <option :value="{ 'id': 'user' }">
+                User
+              </option>
 
-    <div class="field">
-      <label class="label"></label>
-      <p class="control">
-        <input
-          class="input"
-          type="text"
-          placeholder="Search here">
-      </p>
-    </div>
+              <option :value="{ 'id': 'repo' }">
+                Repository
+              </option>
+            </select>
+          </span>
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label"></label>
-      <button class="button is-primary">Search</button>
-    </div>
+      <div class="field">
+        <label class="label"></label>
+        <p class="control">
+          <input
+            class="input"
+            v-model="form.search"
+            type="text"
+            placeholder="Search here">
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label"></label>
+        <button class="button is-primary" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -36,10 +46,23 @@ export default {
   components: {},
 
   data() {
-    return {}
+    return {
+      form: {
+        search: '',
+        selected: ''
+      }
+    }
   },
 
-  methods: {}
+  methods: {
+    submitForm() {
+      console.warn('Submetendo..', this.form);
+    }
+  },
+
+  created() {
+    this.form.selected = { id: 'user' }
+  }
 }
 </script>
 
