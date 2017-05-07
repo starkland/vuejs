@@ -1,5 +1,11 @@
 <template>
-  <section class="hero is-small is-primary is-bold">
+  <section class="hero is-bold"
+    :class="{
+        'is-large': type == 'error',
+        'is-dark': type == 'error',
+        'is-small': !type,
+        'is-primary': !type
+      }">
     <div class="hero-body">
       <div class="container">
         <h1 class="title">{{title}}</h1>
@@ -17,6 +23,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+
+    type: {
+      type: String,
     },
 
     subtitle: {
