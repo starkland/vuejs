@@ -26,8 +26,8 @@ export default {
     return {
       header: {
         type: 'error',
-        title: 'Home',
-        subtitle: `Search by <b>user</b> or <b>repository</b>.`
+        title: '404 - Not found',
+        subtitle: `You tried to access one page that not exists.`
       }
     }
   },

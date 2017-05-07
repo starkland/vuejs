@@ -45,9 +45,13 @@
     <div
       class="nav-right nav-menu"
       :class="{ 'is-active': isOpen }">
-      <a class="nav-item is-tab">
+
+      <router-link
+        class="nav-item is-tab"
+        to="/"
+        exact>
         Home
-      </a>
+      </router-link>
     </div>
   </nav>
 </template>
