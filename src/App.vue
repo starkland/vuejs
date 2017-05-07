@@ -1,19 +1,33 @@
 <template>
-  <st-header></st-header>
+  <div>
+    <st-header></st-header>
+
+    <st-sub-header
+      :title="header.title"
+      :subtitle="header.subtitle">
+    </st-sub-header>
+  </div>
 </template>
 
 <script>
 import stHeader from './components/Header.vue';
+import stSubHeader from './components/CallToAction.vue';
 
 export default {
   name: 'App',
 
   components: {
-    stHeader
+    stHeader,
+    stSubHeader
   },
 
   data() {
-    return {}
+    return {
+      header: {
+        title: 'Home',
+        subtitle: `Search by <b>user</b> or <b>repository</b>.`
+      }
+    }
   },
 
   methods: {}
