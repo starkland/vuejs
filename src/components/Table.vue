@@ -1,31 +1,38 @@
 <template>
   <div>
-    {{formData}}
-
     <table class="table" v-if="searchType == 'users'">
       <thead>
         <tr>
           <th>Image</th>
           <th>Username</th>
           <th>Score</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr>
+        <tr v-for="item in formData.items">
           <td>
             <figure>
-              <img src="http://dummyimage.com/40x40/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+              <img
+                :src="item.avatar_url"
+                alt="item.login"
+                width="40">
             </figure>
           </td>
 
-          <td><a href="" target="_blank">link</a></td>
-          <td>score</td>
+          <td>
+            <a :href="item.html_url" target="_blank">
+              {{item.login}}
+            </a>
+          </td>
+
+          <td>{{item.score}}</td>
 
           <td>
             <button
               class="button is-info"
-              @click="viewMore">
+              @click="viewMore(item)">
 
               info
             </button>
@@ -41,22 +48,31 @@
           <th>URL</th>
           <th>User</th>
           <th>Language</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr>
-          <td>Nome</td>
+        <tr v-for="item in formData.items">
+          <td>{{item.name}}</td>
 
-          <td><a href="" target="_blank">link</a></td>
+          <td>
+            <a :href="item.html_url" target="_blank">
+              {{item.html_url}}
+            </a>
+          </td>
 
-          <td><a href="" target="_blank">link 2</a></td>
+          <td>
+            <a :href="item.owner.html_url" target="_blank">
+              {{item.owner.login}}
+            </a>
+          </td>
 
-          <td>Linguagem</td>
+          <td>{{item.language}}</td>
 
           <td>
             <button class="button is-info"
-              @click="viewMore">
+              @click="viewMore(item)">
               Info
             </button>
           </td>
@@ -88,12 +104,10 @@ export default {
   },
 
   methods: {
-    viewMore() {
-      console.warn('Clicked.')
+    viewMore(obj) {
+      console.warn('Clicked.', obj)
     }
-  },
-
-  mounted() {}
+  }
 }
 </script>
 

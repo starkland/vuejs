@@ -110,4 +110,8 @@ export default {
   form {
     margin-bottom: 20px;
   }
+
+  .notification {
+    margin-bottom: 20px;
+  }
 </style>

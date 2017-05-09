@@ -55,12 +55,14 @@ export default {
 
   methods: {
     handleGithub(obj) {
-      console.warn(obj);
-      this.githubData = obj;
+      if (obj.items.length > 0) {
+        this.githubData = obj;
+      }
     },
 
     handleType(id) {
       this.searchType = id;
+      this.githubData = {};
     },
 
     handleError(obj) {
