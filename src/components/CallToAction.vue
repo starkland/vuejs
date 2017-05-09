@@ -8,8 +8,25 @@
       }">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">{{title}}</h1>
-        <h2 class="subtitle" v-html="subtitle"></h2>
+        <div class="columns">
+          <div class="column">
+            <h1 class="title">{{title}}</h1>
+            <h2 class="subtitle" v-html="subtitle"></h2>
+          </div>
+
+          <div class="column" v-if="userInfo">
+            {{userInfo.company}} <br>
+            {{userInfo.location}} <br>
+            {{userInfo.bio}}<br>
+          </div>
+
+          <div class="column" v-if="userInfo">
+            <figure class="image">
+              <img :src="userInfo.avatar_url" alt="Image">
+            </figure>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -32,6 +49,10 @@ export default {
     subtitle: {
       type: String,
       required: true
+    },
+
+    userInfo: {
+      type: Object
     }
   },
 
@@ -45,4 +66,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  .image img {
+    width: 130px;
+    height: 130px;
+  }
+</style>

@@ -4,27 +4,9 @@
 
     <st-sub-header
       :title="header.title"
-      :subtitle="header.subtitle">
+      :subtitle="header.subtitle"
+      :userInfo="user">
     </st-sub-header>
-
-    <div class="columns">
-      <div class="column">
-        <h1 class="title">{{header.title}}</h1>
-        <h2 class="subtitle">{{header.subtitle}}</h2>
-      </div>
-
-      <div class="column">
-        {{user.company}} <br>
-        {{user.location}} <br>
-        {{user.bio}}<br>
-      </div>
-
-      <div class="column">
-        <figure class="image">
-          <img :src="user.avatar_url" alt="Image">
-        </figure>
-      </div>
-    </div>
 
     <div class="container">
       <st-repo-card :repo="userRepo"></st-repo-card>
@@ -100,11 +82,6 @@ export default {
 
 <style scoped>
   .container {
-    margin-bottom: 20px;
-  }
-
-  .image img {
-    width: 130px;
-    height: 130px;
+    margin: 20px auto;
   }
 </style>
