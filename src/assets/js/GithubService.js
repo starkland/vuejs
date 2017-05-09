@@ -33,6 +33,19 @@ export default class GithubService {
     Event.$emit('github_userData', obj);
   }
 
+  getRepoByUser(user) {
+    let searchUrl = `${Config.ApiUrl}/users/${user}/repos`;
+
+    axios
+      .get(searchUrl)
+      .then((response) => this._repoResponse(response.data))
+      .catch((err) => this._error(err));
+  }
+
+  _repoResponse(obj) {
+    Event.$emit('github_repoData', obj);
+  }
+
   _error(obj) {
     obj.from = 'GithubService';
     Event.$emit('error', obj);

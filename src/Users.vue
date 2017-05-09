@@ -26,17 +26,15 @@
       </div>
     </div>
 
-    <!-- <div class="container">
+    <div class="container">
       <div class="columns is-multiline is-mobile">
-        <div class="column is-one-third" *ngFor="#item of userRepo">
+        <div class="column is-one-third" v-for="item of userRepo">
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">{{item.name}}</p>
               <a class="card-header-icon">
                 <span class="icon">
-                  <i class="fa" [ngClass]="{
-                    'fa-code-fork': item.fork
-                    }"></i>
+                  <i class="fa" :class="{ 'fa-code-fork': item.fork }"></i>
                 </span>
               </a>
             </header>
@@ -50,17 +48,14 @@
             </div>
 
             <footer class="card-footer">
-              <a href="{{item.html_url}}"
-                target="_blank"
-                class="card-footer-item">
-
+              <a :href="item.html_url" target="_blank" class="card-footer-item">
                 Ver projeto
               </a>
             </footer>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <br>
 
@@ -91,34 +86,41 @@ export default {
         title: '',
         subtitle: ''
       },
-      user: {}
+      user: {},
+      userRepo: []
     }
   },
 
   methods: {
     handleUserData(obj) {
-      console.warn(obj);
-
       this.header.title = `@${obj.login}`;
       this.header.subtitle = obj.name;
 
       this.user = obj;
+    },
+
+    handleRepoData(array) {
+      this.userRepo = array;
     }
   },
 
   mounted() {
     let username = `${this.$route.params.username}`;
+
     this._github.getByUser(username);
+    this._github.getRepoByUser(username);
   },
 
   created() {
     this._github = new Github();
 
     Event.$on('github_userData', this.handleUserData);
+    Event.$on('github_repoData', this.handleRepoData);
   },
 
   beforeDestroy() {
     Event.$off('github_userData');
+    Event.$off('github_repoData');
   }
 }
 </script>
