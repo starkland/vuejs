@@ -27,34 +27,7 @@
     </div>
 
     <div class="container">
-      <div class="columns is-multiline is-mobile">
-        <div class="column is-one-third" v-for="item of userRepo">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">{{item.name}}</p>
-              <a class="card-header-icon">
-                <span class="icon">
-                  <i class="fa" :class="{ 'fa-code-fork': item.fork }"></i>
-                </span>
-              </a>
-            </header>
-
-            <div class="card-content">
-              <div class="content">
-                {{item.description}}
-                <br>
-                <small>{{item.updated_at}}</small>
-              </div>
-            </div>
-
-            <footer class="card-footer">
-              <a :href="item.html_url" target="_blank" class="card-footer-item">
-                Ver projeto
-              </a>
-            </footer>
-          </div>
-        </div>
-      </div>
+      <st-repo-card :repo="userRepo"></st-repo-card>
     </div>
 
     <br>
@@ -67,6 +40,7 @@
 import stHeader from './components/Header.vue';
 import stSubHeader from './components/CallToAction.vue';
 import stFooter from './components/Footer.vue';
+import stRepoCard from './components/RepoCard.vue';
 
 import Event from './assets/js/Event';
 import Github from './assets/js/GithubService';
@@ -77,7 +51,8 @@ export default {
   components: {
     stHeader,
     stSubHeader,
-    stFooter
+    stFooter,
+    stRepoCard
   },
 
   data() {
