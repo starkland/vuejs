@@ -1,9 +1,11 @@
-class UserService {
+import Config from '../../config/';
+
+export default class UserService {
   constructor() {
-    this.url = '';
+    this.url = `${Config.ApiUrl}/users`;
   }
 
   get(keyword) {
-    console.warn(this.url, keyword);
+    console.warn(`${this.url}/${keyword}`);
   }
 }
