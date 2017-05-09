@@ -1,4 +1,7 @@
+import axios from 'axios';
+
 import Config from '../../config/';
+import Event from './Event';
 
 export default class UserService {
   constructor() {
@@ -6,6 +9,17 @@ export default class UserService {
   }
 
   get(keyword) {
-    console.warn(`${this.url}/${keyword}`);
+  	axios
+  		.get(`${this.url}/${keyword}`)
+  		.then((response) => this._response(response.data))
+  		.catch((err) => this._errror(err));
+  }
+
+  _response(obj) {
+  	Event.$emit('user_data', obj);
+  }
+
+  _error(obj) {
+  	Event.$emit('error', obj);
   }
 }

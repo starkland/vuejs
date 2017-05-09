@@ -53,18 +53,25 @@ export default {
       } else {
         this.repo.get(obj.search);
       }
+    },
+
+    handleUser(obj) {
+      this.userObj = obj;
+      // console.warn(obj);
     }
+  },
+
+  created() {
+    this.user = new UserService();
+    this.repo = new GithubService();
+
+    Event.$on('form_submitted', this.handleForm);
+    Event.$on('user_data', this.handleUser);
   },
 
   beforeDestroy() {
     Event.$off('form_submitted');
-  },
-
-  created() {
-    Event.$on('form_submitted', this.handleForm);
-
-    this.user = new UserService();
-    this.repo = new GithubService();
+    Event.$off('user_data');
   }
 }
 </script>
