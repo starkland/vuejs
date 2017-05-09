@@ -30,8 +30,6 @@
       <st-repo-card :repo="userRepo"></st-repo-card>
     </div>
 
-    <br>
-
     <st-footer></st-footer>
   </div>
 </template>
@@ -101,6 +99,10 @@ export default {
 </script>
 
 <style scoped>
+  .container {
+    margin-bottom: 20px;
+  }
+
   .image img {
     width: 130px;
     height: 130px;
