@@ -36,6 +36,11 @@
         </button>
       </div>
     </form>
+
+    <aside class="notification is-danger" v-if="form.error">
+      <button class="delete" @click="hideError"></button>
+      <p>{{form.error.message}}</p>
+    </aside>
   </div>
 </template>
 
@@ -51,7 +56,8 @@ export default {
     return {
       form: {
         search: '',
-        selected: ''
+        selected: '',
+        error: false
       }
     }
   },
@@ -63,17 +69,25 @@ export default {
       if (valid) {
         Event.$emit('form_submitted', this.form);
       }
-
-      console.warn(valid);
     },
 
     validateData(obj) {
       for (let key in obj) {
         if (obj[key] === '' || obj[key] === undefined) {
-          // console.warn('Tá vazio', key);
+          this.form.error = {
+            message: `O campo ${key} deve ser preenchido.`
+          };
+
           return false;
+        } else {
+          this.form.error = false;
+          return true;
         }
       }
+    },
+
+    hideError() {
+      this.form.error = false;
     }
   },
 
