@@ -5,12 +5,12 @@
         <label class="label">Search by:</label>
         <p class="control">
           <span class="select">
-            <select v-model="form.selected">
-              <option :value="{ 'id': 'user' }">
+            <select v-model="form.selected" @change="changeOptions">
+              <option :value="{ 'id': 'users' }">
                 User
               </option>
 
-              <option :value="{ 'id': 'repo' }">
+              <option :value="{ 'id': 'repositories' }">
                 Repository
               </option>
             </select>
@@ -36,11 +36,17 @@
         </button>
       </div>
     </form>
+
+    <aside class="notification is-danger" v-if="form.error">
+      <button class="delete" @click="hideError"></button>
+      <p>{{form.error.message}}</p>
+    </aside>
   </div>
 </template>
 
 <script>
 import Event from '../assets/js/Event';
+import Github from '../assets/js/GithubService';
 
 export default {
   name: 'Form',
@@ -51,25 +57,61 @@ export default {
     return {
       form: {
         search: '',
-        selected: ''
+        selected: '',
+        error: false
       }
     }
   },
 
   methods: {
     submitForm() {
-      Event.$emit('form_submitted', this.form);
+      let valid = this.validateData(this.form);
+
+      if (valid) {
+        this._github.get(this.form);
+      }
+    },
+
+    validateData(obj) {
+      for (let key in obj) {
+        if (obj[key] === '' || obj[key] === undefined) {
+          this.form.error = {
+            message: `O campo ${key} deve ser preenchido.`
+          };
+
+          return false;
+        } else {
+          this.form.error = false;
+          return true;
+        }
+      }
+    },
+
+    hideError() {
+      this.form.error = false;
+    },
+
+    changeOptions() {
+      Event.$emit('form_type', this.form.selected.id);
     }
   },
 
   created() {
-    this.form.selected = { id: 'user' }
+    this._github = new Github();
+
+    this.form.selected = { id: 'users' };
+
+    this.changeOptions();
   }
 }
 </script>
 
 <style scoped>
   form {
+    margin-bottom: 20px;
+  }
+
+  .notification {
     margin-bottom: 20px;
   }
 </style>

@@ -11,6 +11,11 @@
 
     <div class="container">
       <st-form></st-form>
+
+      <st-table
+        :searchType="searchType"
+        :formData="githubData">
+      </st-table>
     </div>
 
     <st-footer></st-footer>
@@ -21,11 +26,10 @@
 import stHeader from './components/Header.vue';
 import stSubHeader from './components/CallToAction.vue';
 import stForm from './components/Form.vue';
+import stTable from './components/Table.vue';
 import stFooter from './components/Footer.vue';
 
 import Event from './assets/js/Event';
-import UserService from './assets/js/UserService';
-import GithubService from './assets/js/GithubService';
 
 export default {
   name: 'App',
@@ -34,6 +38,7 @@ export default {
     stHeader,
     stSubHeader,
     stForm,
+    stTable,
     stFooter
   },
 
@@ -42,29 +47,39 @@ export default {
       header: {
         title: 'Home',
         subtitle: `Search by <b>user</b> or <b>repository</b>.`
-      }
+      },
+      searchType: '',
+      githubData: {}
     }
   },
 
   methods: {
-    handleForm(obj) {
-      if (obj.selected.id === 'user') {
-        this.user.get(obj.search);
-      } else {
-        this.repo.get(obj.search);
+    handleGithub(obj) {
+      if (obj.items.length > 0) {
+        this.githubData = obj;
       }
+    },
+
+    handleType(id) {
+      this.searchType = id;
+      this.githubData = {};
+    },
+
+    handleError(obj) {
+      console.error('Tivemos um erro:', obj);
     }
   },
 
-  beforeDestroy() {
-    Event.$off('form_submitted');
+  created() {
+    Event.$on('github_data', this.handleGithub);
+    Event.$on('form_type', this.handleType);
+    Event.$on('error', this.handleError);
   },
 
-  created() {
-    Event.$on('form_submitted', this.handleForm);
-
-    this.user = new UserService();
-    this.repo = new GithubService();
+  beforeDestroy() {
+    Event.$off('github_data');
+    Event.$off('form_type');
+    Event.$off('error');
   }
 }
 </script>

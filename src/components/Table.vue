@@ -1,23 +1,82 @@
 <template>
   <div>
-    <table class="table">
+    <table class="table" v-if="searchType == 'users'">
       <thead>
-        <tr v-if="searchType == 'repo'">
-          <th>Title</th>
-          <th>URL</th>
-          <th>User</th>
-          <th>Language</th>
-        </tr>
-
-        <tr v-if="searchType == 'user'">
+        <tr>
           <th>Image</th>
           <th>Username</th>
           <th>Score</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr></tr>
+        <tr v-for="item in formData.items">
+          <td>
+            <figure>
+              <img
+                :src="item.avatar_url"
+                alt="item.login"
+                width="40">
+            </figure>
+          </td>
+
+          <td>
+            <a :href="item.html_url" target="_blank">
+              {{item.login}}
+            </a>
+          </td>
+
+          <td>{{item.score}}</td>
+
+          <td>
+            <button
+              class="button is-info"
+              @click="viewMore(item)">
+
+              info
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table" v-if="searchType == 'repositories'">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>URL</th>
+          <th>User</th>
+          <th>Language</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="item in formData.items">
+          <td>{{item.name}}</td>
+
+          <td>
+            <a :href="item.html_url" target="_blank">
+              {{item.html_url}}
+            </a>
+          </td>
+
+          <td>
+            <a :href="item.owner.html_url" target="_blank">
+              {{item.owner.login}}
+            </a>
+          </td>
+
+          <td>{{item.language}}</td>
+
+          <td>
+            <button class="button is-info"
+              @click="viewMore(item)">
+              Info
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -34,7 +93,7 @@ export default {
     },
 
     formData: {
-      type: Array
+      type: Object
     }
   },
 
@@ -44,10 +103,10 @@ export default {
     return {}
   },
 
-  methods: {},
-
-  mounted() {
-
+  methods: {
+    viewMore(obj) {
+      console.warn('Clicked.', obj)
+    }
   }
 }
 </script>
