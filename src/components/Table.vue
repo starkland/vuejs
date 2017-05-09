@@ -1,6 +1,8 @@
 <template>
   <div>
-    <table class="table" v-if="searchType == 'user'">
+    {{formData}}
+
+    <table class="table" v-if="searchType == 'users'">
       <thead>
         <tr>
           <th>Image</th>
@@ -32,7 +34,7 @@
       </tbody>
     </table>
 
-    <table class="table" v-if="searchType == 'repo'">
+    <table class="table" v-if="searchType == 'repositories'">
       <thead>
         <tr>
           <th>Title</th>
@@ -75,7 +77,7 @@ export default {
     },
 
     formData: {
-      type: Array
+      type: Object
     }
   },
 

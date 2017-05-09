@@ -11,6 +11,11 @@
 
     <div class="container">
       <st-form></st-form>
+
+      <st-table
+        :searchType="searchType"
+        :formData="githubData">
+      </st-table>
     </div>
 
     <st-footer></st-footer>
@@ -21,11 +26,10 @@
 import stHeader from './components/Header.vue';
 import stSubHeader from './components/CallToAction.vue';
 import stForm from './components/Form.vue';
+import stTable from './components/Table.vue';
 import stFooter from './components/Footer.vue';
 
 import Event from './assets/js/Event';
-import UserService from './assets/js/UserService';
-import GithubService from './assets/js/GithubService';
 
 export default {
   name: 'App',
@@ -34,6 +38,7 @@ export default {
     stHeader,
     stSubHeader,
     stForm,
+    stTable,
     stFooter
   },
 
@@ -43,21 +48,19 @@ export default {
         title: 'Home',
         subtitle: `Search by <b>user</b> or <b>repository</b>.`
       },
-      userObj: {}
+      searchType: '',
+      githubData: {}
     }
   },
 
   methods: {
-    handleForm(obj) {
-      if (obj.selected.id === 'user') {
-        this.user.get(obj.search);
-      } else {
-        this.repo.get(obj.search);
-      }
+    handleGithub(obj) {
+      console.warn(obj);
+      this.githubData = obj;
     },
 
-    handleUser(obj) {
-      this.userObj = obj;
+    handleType(id) {
+      this.searchType = id;
     },
 
     handleError(obj) {
@@ -66,17 +69,14 @@ export default {
   },
 
   created() {
-    this.user = new UserService();
-    this.repo = new GithubService();
-
-    Event.$on('form_submitted', this.handleForm);
-    Event.$on('user_data', this.handleUser);
+    Event.$on('github_data', this.handleGithub);
+    Event.$on('form_type', this.handleType);
     Event.$on('error', this.handleError);
   },
 
   beforeDestroy() {
-    Event.$off('form_submitted');
-    Event.$off('user_data');
+    Event.$off('github_data');
+    Event.$off('form_type');
     Event.$off('error');
   }
 }

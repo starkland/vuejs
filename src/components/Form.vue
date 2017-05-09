@@ -5,12 +5,12 @@
         <label class="label">Search by:</label>
         <p class="control">
           <span class="select">
-            <select v-model="form.selected">
-              <option :value="{ 'id': 'user' }">
+            <select v-model="form.selected" @change="changeOptions">
+              <option :value="{ 'id': 'users' }">
                 User
               </option>
 
-              <option :value="{ 'id': 'repo' }">
+              <option :value="{ 'id': 'repositories' }">
                 Repository
               </option>
             </select>
@@ -41,24 +41,17 @@
       <button class="delete" @click="hideError"></button>
       <p>{{form.error.message}}</p>
     </aside>
-
-    <st-table
-      :searchType="form.selected.id">
-    </st-table>
   </div>
 </template>
 
 <script>
-import stTable from './Table.vue';
-
 import Event from '../assets/js/Event';
+import Github from '../assets/js/GithubService';
 
 export default {
   name: 'Form',
 
-  components: {
-    stTable
-  },
+  components: {},
 
   data() {
     return {
@@ -75,7 +68,7 @@ export default {
       let valid = this.validateData(this.form);
 
       if (valid) {
-        Event.$emit('form_submitted', this.form);
+        this._github.get(this.form);
       }
     },
 
@@ -96,11 +89,19 @@ export default {
 
     hideError() {
       this.form.error = false;
+    },
+
+    changeOptions() {
+      Event.$emit('form_type', this.form.selected.id);
     }
   },
 
   created() {
-    this.form.selected = { id: 'user' }
+    this._github = new Github();
+
+    this.form.selected = { id: 'users' };
+
+    this.changeOptions();
   }
 }
 </script>
