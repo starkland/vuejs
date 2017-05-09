@@ -8,17 +8,29 @@ export default class GithubService {
 
   get(obj) {
     let { type = obj.selected.id, search } = obj;
-
     let searchUrl = `${Config.ApiUrl}/search/${type}?q=${search}`;
 
     axios
       .get(searchUrl)
-      .then((response) => this._response(response.data))
+      .then((response) => this._searchResponse(response.data))
       .catch((err) => this._error(err));
   }
 
-  _response(obj) {
+  _searchResponse(obj) {
     Event.$emit('github_data', obj);
+  }
+
+  getByUser(user) {
+    let searchUrl = `${Config.ApiUrl}/users/${user}`;
+
+    axios
+      .get(searchUrl)
+      .then((response) => this._userResponse(response.data))
+      .catch((err) => this._error(err));
+  }
+
+  _userResponse(obj) {
+    Event.$emit('github_userData', obj);
   }
 
   _error(obj) {

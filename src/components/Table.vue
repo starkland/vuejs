@@ -32,7 +32,7 @@
           <td>
             <button
               class="button is-info"
-              @click="viewMore(item)">
+              @click="viewMore(item, searchType)">
 
               info
             </button>
@@ -72,7 +72,7 @@
 
           <td>
             <button class="button is-info"
-              @click="viewMore(item)">
+              @click="viewMore(item, searchType)">
               Info
             </button>
           </td>
@@ -104,9 +104,23 @@ export default {
   },
 
   methods: {
-    viewMore(obj) {
-      console.warn('Clicked.', obj)
-    }
+    viewMore(obj, type) {
+      switch(type) {
+        case 'users':
+          this.openUsers(obj);
+        break;
+
+        case 'repositories':
+          this.openRepos(obj);
+        break;
+      }
+    },
+
+    openUsers(obj) {
+      this.$router.push(`/users/${obj.login}`);
+    },
+
+    openRepos(obj) {}
   }
 }
 </script>
