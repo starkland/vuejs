@@ -20,6 +20,7 @@ export default class UserService {
   }
 
   _error(obj) {
+  	obj.from = 'UserService';
   	Event.$emit('error', obj);
   }
 }

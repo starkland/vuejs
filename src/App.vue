@@ -42,7 +42,8 @@ export default {
       header: {
         title: 'Home',
         subtitle: `Search by <b>user</b> or <b>repository</b>.`
-      }
+      },
+      userObj: {}
     }
   },
 
@@ -57,7 +58,10 @@ export default {
 
     handleUser(obj) {
       this.userObj = obj;
-      // console.warn(obj);
+    },
+
+    handleError(obj) {
+      console.error(obj);
     }
   },
 
@@ -67,11 +71,13 @@ export default {
 
     Event.$on('form_submitted', this.handleForm);
     Event.$on('user_data', this.handleUser);
+    Event.$on('error', this.handleError);
   },
 
   beforeDestroy() {
     Event.$off('form_submitted');
     Event.$off('user_data');
+    Event.$off('error');
   }
 }
 </script>
