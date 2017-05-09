@@ -23,6 +23,10 @@ import stSubHeader from './components/CallToAction.vue';
 import stForm from './components/Form.vue';
 import stFooter from './components/Footer.vue';
 
+import Event from './assets/js/Event';
+import UserService from './assets/js/UserService';
+import GithubService from './assets/js/GithubService';
+
 export default {
   name: 'App',
 
@@ -42,7 +46,26 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    handleForm(obj) {
+      if (obj.selected.id === 'user') {
+        this.user.get(obj.search);
+      } else {
+        this.repo.get(obj.search);
+      }
+    }
+  },
+
+  beforeDestroy() {
+    Event.$off('form_submitted');
+  },
+
+  created() {
+    Event.$on('form_submitted', this.handleForm);
+
+    this.user = new UserService();
+    this.repo = new GithubService();
+  }
 }
 </script>
 

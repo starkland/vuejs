@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import Event from '../assets/js/Event';
+
 export default {
   name: 'Form',
 
@@ -56,7 +58,7 @@ export default {
 
   methods: {
     submitForm() {
-      console.warn('Submetendo..', this.form);
+      Event.$emit('form_submitted', this.form);
     }
   },
 
