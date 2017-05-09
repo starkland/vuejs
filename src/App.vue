@@ -12,6 +12,10 @@
     <div class="container">
       <st-form></st-form>
 
+      <st-notification
+        :message="errorMsg">
+      </st-notification>
+
       <st-table
         :searchType="searchType"
         :formData="githubData">
@@ -28,6 +32,7 @@ import stSubHeader from './components/CallToAction.vue';
 import stForm from './components/Form.vue';
 import stTable from './components/Table.vue';
 import stFooter from './components/Footer.vue';
+import stNotification from './components/Notification.vue';
 
 import Event from './assets/js/Event';
 
@@ -39,7 +44,8 @@ export default {
     stSubHeader,
     stForm,
     stTable,
-    stFooter
+    stFooter,
+    stNotification
   },
 
   data() {
@@ -49,7 +55,8 @@ export default {
         subtitle: `Search by <b>user</b> or <b>repository</b>.`
       },
       searchType: '',
-      githubData: {}
+      githubData: {},
+      errorMsg: ''
     }
   },
 
@@ -57,6 +64,9 @@ export default {
     handleGithub(obj) {
       if (obj.items.length > 0) {
         this.githubData = obj;
+        this.errorMsg = '';
+      } else {
+        this.errorMsg = 'Nenhum registro foi encontrado com o termo pesquisado.'
       }
     },
 
@@ -66,18 +76,24 @@ export default {
     },
 
     handleError(obj) {
-      console.error('Tivemos um erro:', obj);
+      this.errorMsg = obj;
+    },
+
+    handleFormError(obj) {
+      this.errorMsg = obj.message;
     }
   },
 
   created() {
     Event.$on('github_data', this.handleGithub);
+    Event.$on('form_erorr', this.handleFormError);
     Event.$on('form_type', this.handleType);
     Event.$on('error', this.handleError);
   },
 
   beforeDestroy() {
     Event.$off('github_data');
+    Event.$off('form_erorr');
     Event.$off('form_type');
     Event.$off('error');
   }
