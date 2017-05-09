@@ -58,19 +58,22 @@ export default {
 
   methods: {
     submitForm() {
-      this.validateData(this.form)
+      let valid = this.validateData(this.form);
+
+      if (valid) {
+        Event.$emit('form_submitted', this.form);
+      }
+
+      console.warn(valid);
     },
 
     validateData(obj) {
       for (let key in obj) {
         if (obj[key] === '' || obj[key] === undefined) {
-          console.warn('Tá vazio', key);
+          // console.warn('Tá vazio', key);
           return false;
-        } else {
-          Event.$emit('form_submitted', this.form);
         }
       }
-
     }
   },
 

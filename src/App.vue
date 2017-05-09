@@ -61,7 +61,7 @@ export default {
     },
 
     handleError(obj) {
-      console.error(obj);
+      console.error('Tivemos um erro:', obj);
     }
   },
 
