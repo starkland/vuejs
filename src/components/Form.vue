@@ -41,16 +41,24 @@
       <button class="delete" @click="hideError"></button>
       <p>{{form.error.message}}</p>
     </aside>
+
+    <st-table
+      :searchType="form.selected.id">
+    </st-table>
   </div>
 </template>
 
 <script>
+import stTable from './Table.vue';
+
 import Event from '../assets/js/Event';
 
 export default {
   name: 'Form',
 
-  components: {},
+  components: {
+    stTable
+  },
 
   data() {
     return {
